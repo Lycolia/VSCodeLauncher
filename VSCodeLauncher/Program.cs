@@ -1,4 +1,4 @@
-﻿using VSCodeLauncher;
+﻿using VSCodeLauncher.Lib.Config;
 
 /**
  * 処理
@@ -22,7 +22,21 @@
  * 
  */
 
-var conf = ConfigFile.LoadConfig("./config.json");
+var cmdArgs = Environment.GetCommandLineArgs();
+try {
+    var configFile = ConfigFile.LoadConfig("./config.json");
+    if (configFile != null) {
+
+    }
+} catch (Exception ex) {
+    Console.WriteLine(ex);
+}
+var t = configFile.Config;
+
+// UNCパス判定
+// 起動コマンド生成
+// 起動
+
 Console.WriteLine("");
 
 //var cmdArgs = Environment.GetCommandLineArgs();
