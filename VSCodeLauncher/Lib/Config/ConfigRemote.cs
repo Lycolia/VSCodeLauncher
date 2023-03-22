@@ -43,7 +43,7 @@
             get {
                 if (this._RemoteType == null) {
                     throw new Exception("Config Error: Required Host.{HostName}.RemoteType.");
-                } else if (this._RemoteType != "SSH" || this._RemoteType != "WSL") {
+                } else if (this._RemoteType != "SSH" && this._RemoteType != "WSL") {
                     throw new Exception("Config Error: Host.{HostName}.RemoteType must be SSH or WSL.");
                 } else {
                     return this._RemoteType;
