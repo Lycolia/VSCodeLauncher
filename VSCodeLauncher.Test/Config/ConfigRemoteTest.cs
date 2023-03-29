@@ -1,10 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using VSCodeLauncher.Lib.Config;
 
 namespace VSCodeLauncher.Test.Config {
-    internal class ConfigRemoteTest {
+    public class ConfigRemoteTest {
+
+        [Fact]
+        public void NonNullTest() {
+            var actual = new ConfigRemote("foo", "bar");
+
+            Assert.Equal("foo", actual.ExplorerPrefix);
+            Assert.Equal("bar", actual.AppendPrefix);
+        }
+
+        [Fact]
+        public void ExplorerPrefixNullTest() {
+            var actual = new ConfigRemote(null, "bar");
+            var ex = Assert.Throws<Exception>(() => actual.ExplorerPrefix);
+
+            Assert.Equal("Config Error: Required Host.{RemoteHostName}.ExplorerPrefix.", ex.Message);
+        }
+
+        [Fact]
+        public void AppendPrefixNullTest() {
+            var actual = new ConfigRemote("foo", null);
+            var ex = Assert.Throws<Exception>(() => actual.AppendPrefix);
+
+            Assert.Equal("Config Error: Required Host.{RemoteHostName}.AppendPrefix.", ex.Message);
+        }
     }
 }
