@@ -1,14 +1,7 @@
-﻿using VSCodeLauncher.Interface;
-
-namespace VSCodeLauncher.Lib.Config {
+﻿namespace VSCodeLauncher.Lib.Config {
     public class ConfigBase : IConfigBase {
-        private IFileInfo? _CodePath;
-        private Dictionary<string, IConfigRemote>? _Remote;
-
-        public ConfigBase(IFileInfo? codePath, Dictionary<string, IConfigRemote>? remote) {
-            this._CodePath = codePath;
-            this._Remote = remote;
-        }
+        private string? _CodePath;
+        private IDictionary<string, IConfigRemote>? _Remote;
 
         public string CodePath {
             get {
@@ -16,12 +9,13 @@ namespace VSCodeLauncher.Lib.Config {
                     throw new Exception("Config Error: Missing CodePath.");
                 } else if (this._CodePath == null) {
                     throw new Exception("Config Error: CodePath is empty. Set the code.exe path in this field.");
-                } else if (!this._CodePath.Exists) {
+                } else if (!File.Exists(this._CodePath)) {
                     throw new Exception("Config Error: CodePath is Not exists.");
                 } else {
-                    return this._CodePath.FullName;
+                    return this._CodePath;
                 }
             }
+            set { this._CodePath = value; }
         }
 
         public IDictionary<string, IConfigRemote> Remote {
@@ -34,6 +28,7 @@ namespace VSCodeLauncher.Lib.Config {
                     return this._Remote;
                 }
             }
+            set { this._Remote = value; }
         }
     }
 }

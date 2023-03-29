@@ -16,11 +16,6 @@
         /// </example>
         private string? _AppendPrefix;
 
-        public ConfigRemote(string? explorerPrefix, string? appendPrefix) {
-            this._ExplorerPrefix = explorerPrefix;
-            this._AppendPrefix = appendPrefix;
-        }
-
 
         public string ExplorerPrefix {
             get {
@@ -30,6 +25,7 @@
                     return this._ExplorerPrefix;
                 }
             }
+            set { this._ExplorerPrefix = value; }
         }
 
         public string AppendPrefix {
@@ -39,6 +35,9 @@
                 } else {
                     return this._AppendPrefix;
                 }
+            }
+            set {
+                this._AppendPrefix = value;
             }
         }
 

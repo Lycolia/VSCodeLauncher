@@ -3,30 +3,30 @@ using VSCodeLauncher.Lib;
 using VSCodeLauncher.Lib.Config;
 /**
 * usage
-*   VSCodeLauncher.exe path\to\config.json <FULL_PATH>
-*  
-* TODO
-*   configのパス指定
-*   自動テスト
-*   Windows, WSL, SSHの動作確認
-* 
+*   VSCodeLauncher.exe <FULL_PATH>
 */
 
 var cmdArgs = Environment.GetCommandLineArgs();
 var fullPath = CmdArgsParser.GetFullPath(cmdArgs);
 var op = CmdArgsParser.ResolveOpenPath(fullPath);
 if (op == null) {
-    throw new Exception("");
+    // ここに来ることはない
+    // 例外が投げられてルートでキャッチされて勝手に死ぬ想定
+    return;
 }
 
 var config = ConfigFile.LoadConfig("config.json");
 if (config == null) {
-    throw new Exception("");
+    // ここに来ることはない
+    // 例外が投げられてルートでキャッチされて勝手に死ぬ想定
+    return;
 }
 
 var cg = new CommandGenerator(op, config);
 if (cg == null) {
-    throw new Exception("");
+    // ここに来ることはない
+    // 例外が投げられてルートでキャッチされて勝手に死ぬ想定
+    return;
 }
 
 var psi = new ProcessStartInfo();

@@ -2,7 +2,6 @@
 
 namespace VSCodeLauncher.Lib.Config {
     public class ConfigFile {
-
         public static ConfigBase LoadConfig(string configPath) {
             var configFullPath = Path.Combine(Directory.GetCurrentDirectory(), configPath);
 
