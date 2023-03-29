@@ -28,7 +28,8 @@ VSCode でリモートのパスを開く時の面倒臭さを少し解決する�
 
 ## インストール方法
 
-1. [release ページ](https://github.com/Lycolia/VSCodeLauncher/releases)から zip を落とす
+1. [release ページ](https://github.com/Lycolia/VSCodeLauncher/releases)から zip を落とすか、ソースコードを落として VisualStudio でビルドする
+    - ビルド確認は Visual Studio Community 2022 でしてます
 2. 適当なパスに展開する
 3. 以下のレジストリキーに `"C:\path\to\VSCodeLauncher.exe" "%V"` を追加する
     - `\HKEY_CLASSES_ROOT\Directory\shell\VSCode\command`
