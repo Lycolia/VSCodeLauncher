@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 
 namespace VSCodeLauncher.Lib.CommandLineParser {
+
     public static class CmdArgsParser {
         public static string GetFullPath(string[] cmdArgs) {
             if (cmdArgs.Length < 2) {
@@ -11,18 +12,31 @@ namespace VSCodeLauncher.Lib.CommandLineParser {
         }
 
         public static OpenPath ResolveOpenPath(string fullPath) {
-            var uncPathPattern = new Regex(@"^\\\\([^\\]+?)\\");
-            var uncMatch = uncPathPattern.Match(fullPath);
-
-            var windowsPathPattern = new Regex(@"^[A-Z]:\\");
-
-            if (windowsPathPattern.IsMatch(fullPath)) {
-                return new OpenPath(false, fullPath, "");
-            } else if (uncMatch.Success && uncMatch.Groups.Count == 2) {
-                return new OpenPath(true, fullPath, uncMatch.Groups[1].Value);
-            } else {
-                throw new ArgumentException("Invalid path format. Required specify UNC path or Windows path as absolute path in command-line arguments.");
+            if (Regex.IsMatch(fullPath, @"^[A-Z]:\\")) {
+                // Windows
+                return new OpenPath("", "", fullPath);
             }
+
+            var wslPathMat = Regex.Match(fullPath, @"^\\\\wsl\.[^\\]+\\([^\\]+)");
+            if (wslPathMat.Success && wslPathMat.Groups.Count == 2) {
+                // \\wsl.localhost\<Distro-name>
+                return new OpenPath("WSL", wslPathMat.Groups[1].Value, fullPath);
+            }
+
+            var wslLegacyPathMat = Regex.Match(fullPath, @"^\\\\wsl\$\\([^\\]+)");
+            if (wslLegacyPathMat.Success && wslLegacyPathMat.Groups.Count == 2) {
+                // \\wsl$\<Distro-name>
+                return new OpenPath("WSL", wslLegacyPathMat.Groups[1].Value, fullPath);
+            }
+
+            var sshPathMat = Regex.Match(fullPath, @"^\\\\([^\\]+?)\\");
+            if (sshPathMat.Success && sshPathMat.Groups.Count == 2) {
+                // other
+                return new OpenPath("SSH", sshPathMat.Groups[1].Value, fullPath);
+            }
+
+            // invalid path
+            throw new ArgumentException("Invalid path format. Required specify UNC path or Windows path as absolute path in command-line arguments.");
         }
     }
 }

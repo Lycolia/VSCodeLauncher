@@ -1,15 +1,24 @@
 ﻿namespace VSCodeLauncher.Lib.CommandLineParser {
     public class OpenPath {
-        public bool IsRemote { get; }
-
-        public string Path { get; }
+        /// <summary>
+        /// "" | "ssh" | "wsl"
+        /// </summary>
+        public string RemoteType { get; }
 
         public string HostName { get; }
 
-        public OpenPath(bool isRemote, string path, string hostName) {
-            this.IsRemote = isRemote;
-            this.Path = path;
+        public string FullPath { get; }
+
+        public OpenPath(string remoteType, string hostName, string fullPath) {
+            this.RemoteType = remoteType;
             this.HostName = hostName;
+            this.FullPath = fullPath;
+        }
+
+        public bool IsRemote {
+            get {
+                return this.RemoteType == "ssh" || this.RemoteType == "wsl";
+            }
         }
     }
 }

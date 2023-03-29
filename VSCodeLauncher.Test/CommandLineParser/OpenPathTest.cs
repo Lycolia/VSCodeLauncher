@@ -3,53 +3,34 @@
 namespace VSCodeLauncher.Test.CommandLineParser {
     public class OpenPathTest {
         [Fact]
-        public void IsRemote_False() {
-            var path = new OpenPath(false, @"\\example.com\foo");
+        public void IsRemote_False_All_Empty() {
+            var actual = new OpenPath("", "", "");
 
-            Assert.False(path.IsRemote);
+            Assert.False(actual.IsRemote);
+            Assert.Equal("", actual.RemoteType);
+            Assert.Equal("", actual.HostName);
+            Assert.Equal("", actual.FullPath);
         }
 
         [Fact]
-        public void IsRemote_True() {
-            var path = new OpenPath(true, @"C:\windows");
+        public void IsRemote_True_WSL_Type() {
+            var actual = new OpenPath("wsl", "", "");
 
-            Assert.True(path.IsRemote);
+            Assert.True(actual.IsRemote);
+            Assert.Equal("wsl", actual.RemoteType);
+            Assert.Equal("", actual.HostName);
+            Assert.Equal("", actual.FullPath);
         }
 
         [Fact]
-        public void GetPath() {
-            var path = new OpenPath(false, @"C:\windows");
+        public void IsRemote_True_SSH_Type() {
+            var actual = new OpenPath("ssh", "", "");
 
-            Assert.Equal(@"C:\windows", path.Path);
+            Assert.True(actual.IsRemote);
+            Assert.Equal("ssh", actual.RemoteType);
+            Assert.Equal("", actual.HostName);
+            Assert.Equal("", actual.FullPath);
         }
 
-
-        [Fact]
-        public void WSL_Type_new() {
-            var path = new OpenPath(false, @"\\wsl.localhost\Ubuntu-20.04\home\foo");
-
-            Assert.Equal("WSL", path.Type);
-        }
-
-        [Fact]
-        public void WSL_Type_legacy() {
-            var path = new OpenPath(false, @"\\wsl$\Ubuntu-20.04\home\foo");
-
-            Assert.Equal("WSL", path.Type);
-        }
-
-        [Fact]
-        public void SSH_Type_With_Domain() {
-            var path = new OpenPath(false, @"\\example.com\foo");
-
-            Assert.Equal("SSH", path.Type);
-        }
-
-        [Fact]
-        public void SSH_Type_With_Ip() {
-            var path = new OpenPath(false, @"\\127.0.0.1\foo");
-
-            Assert.Equal("SSH", path.Type);
-        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 
 namespace VSCodeLauncher.Lib.Config {
-    public static class ConfigFile {
+    public class ConfigFile {
 
         public static ConfigBase LoadConfig(string configPath) {
             var configFullPath = Path.Combine(Directory.GetCurrentDirectory(), configPath);

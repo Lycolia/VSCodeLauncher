@@ -1,9 +1,11 @@
-﻿namespace VSCodeLauncher.Lib.Config {
+﻿using VSCodeLauncher.Interface;
+
+namespace VSCodeLauncher.Lib.Config {
     public class ConfigBase {
-        private string? _CodePath;
+        private IFileInfo? _CodePath;
         private Dictionary<string, ConfigRemote>? _Remote;
 
-        public ConfigBase(string? codePath, Dictionary<string, ConfigRemote>? remote) {
+        public ConfigBase(IFileInfo? codePath, Dictionary<string, ConfigRemote>? remote) {
             this._CodePath = codePath;
             this._Remote = remote;
         }
@@ -12,12 +14,12 @@
             get {
                 if (this._CodePath == null) {
                     throw new Exception("Config Error: Missing CodePath.");
-                } else if (this._CodePath == "") {
+                } else if (this._CodePath == null) {
                     throw new Exception("Config Error: CodePath is empty. Set the code.exe path in this field.");
-                } else if (!File.Exists(this._CodePath)) {
+                } else if (!this._CodePath.Exists) {
                     throw new Exception("Config Error: CodePath is Not exists.");
                 } else {
-                    return this._CodePath;
+                    return this._CodePath.FullName;
                 }
             }
         }

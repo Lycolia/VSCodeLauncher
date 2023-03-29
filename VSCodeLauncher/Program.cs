@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using VSCodeLauncher.Lib.CommandGenerator;
 using VSCodeLauncher.Lib.CommandLineParser;
 using VSCodeLauncher.Lib.Config;
+using VSCodeLauncher.Lib.Util;
 /**
 * usage
 *   VSCodeLauncher.exe path\to\config.json <FULL_PATH>
