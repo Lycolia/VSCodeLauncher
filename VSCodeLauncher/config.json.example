@@ -1,0 +1,13 @@
+{
+  "CodePath": "C:\\Users\\<your-name>\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
+  "Remote": {
+    "Ubuntu-20.04": {
+      "ExplorerPrefix": "\\\\wsl.localhost\\Ubuntu-20.04\\",
+      "AppendPrefix": ""
+    },
+    "example.com": {
+      "ExplorerPrefix": "\\\\example.com\\",
+      "AppendPrefix": "/home/"
+    }
+  }
+}

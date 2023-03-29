@@ -1,5 +1,5 @@
 ﻿namespace VSCodeLauncher.Lib.Config {
-    public class ConfigRemote : IConfigRemote {
+    public class ConfigRemote {
         /// <summary>
         /// Destination UNC path prefix
         /// Paths in Explorer but unnecessary for VSCode

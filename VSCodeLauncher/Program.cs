@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using VSCodeLauncher.Lib;
 using VSCodeLauncher.Lib.Config;
+
 /**
 * usage
 *   VSCodeLauncher.exe <FULL_PATH>

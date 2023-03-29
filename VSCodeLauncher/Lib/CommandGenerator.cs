@@ -4,15 +4,15 @@ using VSCodeLauncher.Lib.Config;
 namespace VSCodeLauncher.Lib {
     public class CommandGenerator {
 
-        public IOpenPath OpenPath { get; }
-        public IConfigBase Config { get; }
+        public OpenPath OpenPath { get; }
+        public ConfigBase Config { get; }
 
-        public CommandGenerator(IOpenPath openPath, IConfigBase config) {
+        public CommandGenerator(OpenPath openPath, ConfigBase config) {
             OpenPath = openPath;
             Config = config;
         }
 
-        private IConfigRemote GetConfigHost() {
+        private ConfigRemote GetConfigHost() {
             if (!Config.Remote.ContainsKey(OpenPath.HostName)) {
                 throw new Exception($"Host ${OpenPath.HostName} not exists in config file.");
             }

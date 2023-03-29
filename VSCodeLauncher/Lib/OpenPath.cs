@@ -1,7 +1,7 @@
 ﻿namespace VSCodeLauncher.Lib {
-    public class OpenPath : IOpenPath {
+    public class OpenPath {
         /// <summary>
-        /// "" | "ssh" | "wsl"
+        /// "" | "ssh-remote" | "wsl"
         /// </summary>
         public string RemoteType { get; }
 
@@ -17,7 +17,7 @@
 
         public bool IsRemote {
             get {
-                return RemoteType == "ssh" || RemoteType == "wsl";
+                return RemoteType == "ssh-remote" || RemoteType == "wsl";
             }
         }
     }

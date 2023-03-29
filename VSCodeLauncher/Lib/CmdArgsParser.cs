@@ -11,7 +11,7 @@ namespace VSCodeLauncher.Lib {
             return cmdArgs[1];
         }
 
-        public static IOpenPath ResolveOpenPath(string fullPath) {
+        public static OpenPath ResolveOpenPath(string fullPath) {
             if (Regex.IsMatch(fullPath, @"^[A-Z]:\\")) {
                 // Windows
                 return new OpenPath("", "", fullPath);
@@ -20,19 +20,19 @@ namespace VSCodeLauncher.Lib {
             var wslPathMat = Regex.Match(fullPath, @"^\\\\wsl\.[^\\]+\\([^\\]+)");
             if (wslPathMat.Success && wslPathMat.Groups.Count == 2) {
                 // \\wsl.localhost\<Distro-name>
-                return new OpenPath("WSL", wslPathMat.Groups[1].Value, fullPath);
+                return new OpenPath("wsl", wslPathMat.Groups[1].Value, fullPath);
             }
 
             var wslLegacyPathMat = Regex.Match(fullPath, @"^\\\\wsl\$\\([^\\]+)");
             if (wslLegacyPathMat.Success && wslLegacyPathMat.Groups.Count == 2) {
                 // \\wsl$\<Distro-name>
-                return new OpenPath("WSL", wslLegacyPathMat.Groups[1].Value, fullPath);
+                return new OpenPath("wsl", wslLegacyPathMat.Groups[1].Value, fullPath);
             }
 
             var sshPathMat = Regex.Match(fullPath, @"^\\\\([^\\]+?)\\");
             if (sshPathMat.Success && sshPathMat.Groups.Count == 2) {
                 // other
-                return new OpenPath("SSH", sshPathMat.Groups[1].Value, fullPath);
+                return new OpenPath("ssh-remote", sshPathMat.Groups[1].Value, fullPath);
             }
 
             // invalid path
