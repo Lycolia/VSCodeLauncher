@@ -24,7 +24,7 @@ VSCode でリモートのパスを開く時の面倒臭さを少し解決する�
 | Windows | `C:\Users\foo\Desktop`                          | ドライブレターがついてないのは開けません。                               |
 | SSH     | `\\example.com\foo\desktop`                     | samba のパスを開くことを想定してます。ホスト部分は IP でもいけます。多分 |
 | WSL     | `\\wsl.localhost\Ubuntu-20.04\home\foo\desktop` | 新しい WSL のパス形式です。                                              |
-| WSL     | `\\wsl$\Ubuntu-20.04\home\foo\desktop`          | 古い WSL パス形式です。環境がないので動作確認してません                  |
+| WSL     | `\\wsl$\Ubuntu-20.04\home\foo\desktop`          | 古い WSL パス形式です。環境がないので動作確認してません。                 |
 
 ## インストール方法
 
@@ -38,44 +38,44 @@ VSCode でリモートのパスを開く時の面倒臭さを少し解決する�
 
 ### `config.json` フォーマット
 
--   このファイルは Explorer 上のパスと実際に開くパスの差分を解決するためにあります
-    -   やってることは Explorer から取得したパスをそれぞれの環境向けに変換して VSCode に渡してるだけです
--   `\` は `\\` でエスケープして記述します
+-   このファイルは Explorer 上のパスと実際に開くパスの差分を解決するためにある
+    -   やってることは Explorer から取得したパスをそれぞれの環境向けに変換して VSCode に渡してるだけ
+-   `\` は `\\` でエスケープして記述する
 
 <!--prettier-ignore-->
 ```jsonc
 {
   // VSCodeのexeパスを指定します
   "CodePath": "C:\\Users\\<your-name>\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe",
-  // リモート環境の設定。KEY VALUE形式です。
+  // リモート環境の設定。KEY VALUE形式で記述する
   "Remote": {
-    // WSLの場合、ディストリビューション名をキーに指定します
+    // WSLの場合、ディストリビューション名をキーに指定する
     "Ubuntu-20.04": {
-      // 先頭の不要なパスを除外する設定です
+      // 先頭の不要なパスを除外する設定
       //   例えばExplorer上は以下だが
       //   \\wsl.localhost\Ubuntu-20.04\home\foo\desktop
       //   実際は以下を開きたい場合
       //   \home\foo\desktop
-      //   以下のように指定することで開くことが出来ます
+      //   以下のように指定することで開くことが出来る
       //   \\\\wsl.localhost\\Ubuntu-20.04\\
       "ExplorerPrefix": "\\\\wsl.localhost\\Ubuntu-20.04\\",
-      // 先頭に必要なパスを追記する設定です
-      //   WSLの場合は空文字で大丈夫です
+      // 先頭に必要なパスを追記する設定
+      //   WSLの場合は空文字を指定
       "AppendPrefix": ""
     },
-    // SSHの場合、UNCパスの頭についてるホスト名を指定します
+    // SSHの場合、UNCパスの頭についてるホスト名を指定する
     "example.com": {
-      // 先頭の不要なパスを除外する設定です
+      // 先頭の不要なパスを除外する設定
       //   例えばExplorer上は以下だが
       //   \\example.com\foo\desktop
       //   実際は以下を開きたい場合
       //   \home\foo\desktop
-      //   以下のように指定することで開くことが出来ます
+      //   以下のように指定することで開くことが出来る
       //   \\\\example.com\\
       "ExplorerPrefix": "\\\\example.com\\",
-      // 先頭に必要なパスを追記する設定です。ディレクトリの区切りは \ でなく / で書きます
+      // 先頭に必要なパスを追記する設定です。ディレクトリの区切りは \ でなく / で記述する
       //   ExplorerPrefixだけでは foo/desktop を開いてしまうので
-      //   こちらの内容を足して /home/foo/desktop になるようにします
+      //   こちらの内容を足して /home/foo/desktop になるようにする
       "AppendPrefix": "/home/"
     }
   }
@@ -84,8 +84,8 @@ VSCode でリモートのパスを開く時の面倒臭さを少し解決する�
 
 ## 作った理由
 
-毎回ここからリモート環境を選んだり、ここになかったら頑張ってディレクトリ開く手間があり、面倒だったため。Explorer からやったほうが直感的で早い
+毎回ここからリモート環境を選んだり、ここになかったら頑張ってディレクトリ開く手間があり、面倒だったため。Explorer からやったほうが直感的で早い。
 
 ![image](https://user-images.githubusercontent.com/33796432/228574556-2b2a31a6-b3d5-46a2-afc4-bd1997fe962e.png)
 
-WSL のパス開いたときは一応 WSL 拡張で開くか聞いてくれるのですが、SSH だと聞いてくれないので、そこを解消する目的もありました
+WSL のパス開いたときは一応 WSL 拡張で開くか聞いてくれるのですが、SSH だと聞いてくれないので、そこを解消する目的もありました。
