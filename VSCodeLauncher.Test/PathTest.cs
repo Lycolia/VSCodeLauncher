@@ -1,7 +1,9 @@
-﻿using VSCodeLauncher.Lib.Util;
+﻿using VSCodeLauncher.Lib;
 
-namespace VSCodeLauncher.Test.Util {
-    public class PathUtilTest {
+namespace VSCodeLauncher.Test
+{
+    public class PathUtilTest
+    {
 
         [Theory]
         [InlineData('\\', @"C:\users\foo", @"desktop\bar", @"C:\users\foo\desktop\bar")]
@@ -12,7 +14,8 @@ namespace VSCodeLauncher.Test.Util {
         [InlineData('/', @"/home/foo/", @"desktop/bar", @"/home/foo/desktop/bar")]
         [InlineData('/', @"/home/foo", @"/desktop/bar", @"/home/foo/desktop/bar")]
         [InlineData('/', @"/home/foo/", @"/desktop/bar", @"/home/foo/desktop/bar")]
-        public void JoinTest(char separator, string path1, string path2, string expected) {
+        public void JoinTest(char separator, string path1, string path2, string expected)
+        {
             var actual = PathUtil.Join(separator, path1, path2);
 
             Assert.Equal(expected, actual);

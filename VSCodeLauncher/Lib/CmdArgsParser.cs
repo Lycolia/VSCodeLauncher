@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace VSCodeLauncher.Lib.CommandLineParser {
+namespace VSCodeLauncher.Lib {
 
-    public static class CmdArgsParser {
+    public class CmdArgsParser {
         public static string GetFullPath(string[] cmdArgs) {
             if (cmdArgs.Length < 2) {
                 throw new ArgumentException("Empty command-line arguments. Required specify the path to open in VSCode in the command line argument.");
@@ -11,7 +11,7 @@ namespace VSCodeLauncher.Lib.CommandLineParser {
             return cmdArgs[1];
         }
 
-        public static OpenPath ResolveOpenPath(string fullPath) {
+        public static IOpenPath ResolveOpenPath(string fullPath) {
             if (Regex.IsMatch(fullPath, @"^[A-Z]:\\")) {
                 // Windows
                 return new OpenPath("", "", fullPath);

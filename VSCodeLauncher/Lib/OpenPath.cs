@@ -1,5 +1,5 @@
-﻿namespace VSCodeLauncher.Lib.CommandLineParser {
-    public class OpenPath {
+﻿namespace VSCodeLauncher.Lib {
+    public class OpenPath : IOpenPath {
         /// <summary>
         /// "" | "ssh" | "wsl"
         /// </summary>
@@ -17,7 +17,7 @@
 
         public bool IsRemote {
             get {
-                return this.RemoteType == "ssh" || this.RemoteType == "wsl";
+                return RemoteType == "ssh" || RemoteType == "wsl";
             }
         }
     }

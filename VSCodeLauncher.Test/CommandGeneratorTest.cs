@@ -1,18 +1,20 @@
-﻿using VSCodeLauncher.Lib.CommandLineParser;
+﻿using VSCodeLauncher.Lib;
 using VSCodeLauncher.Lib.Config;
-using VSCodeLauncher.Lib.Util;
+using VSCodeLauncher.Test.Config;
 
-namespace VSCodeLauncher.Test.Path {
+namespace VSCodeLauncher.Test {
+
     public class CommandGeneratorTest {
 
         [Fact]
         public void TestCommandGenerator() {
-            var configRemote = new ConfigRemote("", "");
-            var remoteDict = new Dictionary<string, ConfigRemote>();
-            remoteDict.Add("test", configRemote);
+            var configRemote = new ConfigRemoteMock("", "");
+            var remoteDict = new Dictionary<string, IConfigRemote> {
+                { "test", configRemote }
+            };
 
-            var configBase = new ConfigBase(@"C:\user\foo\code", remoteDict);
-            var openPath = new OpenPath("", "", @"C:\user\foo\desktop\example");
+            var configBase = new ConfigBaseMock(@"C:\user\foo\code", remoteDict);
+            var openPath = new OpenPathMock("", "", @"C:\user\foo\desktop\example", false);
             var actual = new CommandGenerator(openPath, configBase);
 
             Assert.True(actual.OpenPath.Equals(openPath));
@@ -21,13 +23,13 @@ namespace VSCodeLauncher.Test.Path {
 
         [Fact]
         public void Return_LocalCommand() {
-            var configRemote = new ConfigRemote("", "");
-            var remoteDict = new Dictionary<string, ConfigRemote> {
+            var configRemote = new ConfigRemoteMock("", "");
+            var remoteDict = new Dictionary<string, IConfigRemote> {
                 { "test", configRemote }
             };
 
-            var configBase = new ConfigBase(@"C:\user\foo\code", remoteDict);
-            var openPath = new OpenPath("", "", @"C:\user\foo\desktop\example");
+            var configBase = new ConfigBaseMock(@"C:\user\foo\code", remoteDict);
+            var openPath = new OpenPathMock("", "", @"C:\user\foo\desktop\example", false);
             var cg = new CommandGenerator(openPath, configBase);
 
             var actual = cg.GenerateCommand();
@@ -41,13 +43,13 @@ namespace VSCodeLauncher.Test.Path {
         [InlineData(@"\\example.com\", "/home")]
         [InlineData(@"\\example.com", "/home")]
         public void Return_RemoteSshCommand(string explorePrefix, string appendPrefix) {
-            var configRemote = new ConfigRemote(explorePrefix, appendPrefix);
-            var remoteDict = new Dictionary<string, ConfigRemote> {
+            var configRemote = new ConfigRemoteMock(explorePrefix, appendPrefix);
+            var remoteDict = new Dictionary<string, IConfigRemote> {
                 { "example.com", configRemote }
             };
 
-            var configBase = new ConfigBase(@"C:\user\foo\code", remoteDict);
-            var openPath = new OpenPath("ssh", "example.com", @"\\example.com\develop");
+            var configBase = new ConfigBaseMock(@"C:\user\foo\code", remoteDict);
+            var openPath = new OpenPathMock("ssh", "example.com", @"\\example.com\develop", true);
             var cg = new CommandGenerator(openPath, configBase);
 
             var actual = cg.GenerateCommand();
@@ -61,13 +63,13 @@ namespace VSCodeLauncher.Test.Path {
         [InlineData(@"\\wsl.localhost\Ubuntu-20.04")]
         [InlineData(@"\\wsl.localhost\Ubuntu-20.04\")]
         public void Return_RemoteWslCommand(string explorePrefix) {
-            var configRemote = new ConfigRemote(explorePrefix, "");
-            var remoteDict = new Dictionary<string, ConfigRemote> {
+            var configRemote = new ConfigRemoteMock(explorePrefix, "");
+            var remoteDict = new Dictionary<string, IConfigRemote> {
                 { "Ubuntu-20.04", configRemote }
             };
 
-            var configBase = new ConfigBase(@"C:\user\foo\code", remoteDict);
-            var openPath = new OpenPath("wsl", "Ubuntu-20.04", @"\\wsl.localhost\Ubuntu-20.04\home\foo\develop");
+            var configBase = new ConfigBaseMock(@"C:\user\foo\code", remoteDict);
+            var openPath = new OpenPathMock("wsl", "Ubuntu-20.04", @"\\wsl.localhost\Ubuntu-20.04\home\foo\develop", true);
             var cg = new CommandGenerator(openPath, configBase);
 
             var actual = cg.GenerateCommand();
@@ -81,13 +83,13 @@ namespace VSCodeLauncher.Test.Path {
         [InlineData(@"\\wsl$\Ubuntu-20.04")]
         [InlineData(@"\\wsl$\Ubuntu-20.04\")]
         public void Return_RemoteLegacyWslCommand(string explorePrefix) {
-            var configRemote = new ConfigRemote(explorePrefix, "");
-            var remoteDict = new Dictionary<string, ConfigRemote> {
+            var configRemote = new ConfigRemoteMock(explorePrefix, "");
+            var remoteDict = new Dictionary<string, IConfigRemote> {
                 { "Ubuntu-20.04", configRemote }
             };
 
-            var configBase = new ConfigBase(@"C:\user\foo\code", remoteDict);
-            var openPath = new OpenPath("wsl", "Ubuntu-20.04", @"\\wsl$\Ubuntu-20.04\home\foo\develop");
+            var configBase = new ConfigBaseMock(@"C:\user\foo\code", remoteDict);
+            var openPath = new OpenPathMock("wsl", "Ubuntu-20.04", @"\\wsl$\Ubuntu-20.04\home\foo\develop", true);
             var cg = new CommandGenerator(openPath, configBase);
 
             var actual = cg.GenerateCommand();

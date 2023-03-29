@@ -1,6 +1,6 @@
-﻿using VSCodeLauncher.Lib.CommandLineParser;
+﻿using VSCodeLauncher.Lib;
 
-namespace VSCodeLauncher.Test.CommandLineParser {
+namespace VSCodeLauncher.Test {
     public class OpenPathTest {
         [Fact]
         public void IsRemote_False_All_Empty() {

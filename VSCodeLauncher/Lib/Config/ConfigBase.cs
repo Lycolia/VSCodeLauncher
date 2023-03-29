@@ -1,11 +1,11 @@
 ﻿using VSCodeLauncher.Interface;
 
 namespace VSCodeLauncher.Lib.Config {
-    public class ConfigBase {
+    public class ConfigBase : IConfigBase {
         private IFileInfo? _CodePath;
-        private Dictionary<string, ConfigRemote>? _Remote;
+        private Dictionary<string, IConfigRemote>? _Remote;
 
-        public ConfigBase(IFileInfo? codePath, Dictionary<string, ConfigRemote>? remote) {
+        public ConfigBase(IFileInfo? codePath, Dictionary<string, IConfigRemote>? remote) {
             this._CodePath = codePath;
             this._Remote = remote;
         }
@@ -24,7 +24,7 @@ namespace VSCodeLauncher.Lib.Config {
             }
         }
 
-        public Dictionary<string, ConfigRemote> Remote {
+        public IDictionary<string, IConfigRemote> Remote {
             get {
                 if (this._Remote == null) {
                     throw new Exception("Config Error: Missing Remote.");
@@ -35,6 +35,5 @@ namespace VSCodeLauncher.Lib.Config {
                 }
             }
         }
-
     }
 }

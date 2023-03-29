@@ -1,6 +1,6 @@
-﻿using VSCodeLauncher.Lib.CommandLineParser;
+﻿using VSCodeLauncher.Lib;
 
-namespace VSCodeLauncher.Test.CommandLineParser {
+namespace VSCodeLauncher.Test {
     public class CmdArgsParserTest {
         [Fact]
         public void ReturnFirstArgs_GetFullPath() {
