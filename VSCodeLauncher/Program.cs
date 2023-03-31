@@ -42,7 +42,7 @@ try {
     Process.Start(psi);
 } catch (Exception ex) {
     Console.WriteLine(ex.ToString());
-    Console.WriteLine("終了するには何かキーを入力してください。");
+    Console.WriteLine("Press any key to exit");
     Console.ReadLine();
 }
 
